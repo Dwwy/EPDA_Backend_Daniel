@@ -7,8 +7,8 @@ public class GenericQuery {
     private String whereColumn;
     private Where whereCondition;
     private Object value;
-    private Object value2;
-    private type type;
+    private Object value2; //optional
+    private type type; //optional
     public enum type {
         timestamp,
         integer

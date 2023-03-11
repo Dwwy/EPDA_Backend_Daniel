@@ -1,5 +1,6 @@
 package com.test.testing.Model;
 
+import com.test.testing.Util.StaticVariable;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;

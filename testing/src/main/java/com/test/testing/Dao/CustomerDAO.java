@@ -1,17 +1,15 @@
 package com.test.testing.Dao;
 
 import com.test.testing.Model.Customer;
-import com.test.testing.Model.CustomerInput;
-import com.test.testing.Util.ConfigureDataSource;
-import jakarta.persistence.EntityManager;
+import com.test.testing.Model.GenericQuery;
+import com.test.testing.Model.User;
+import com.test.testing.Util.StaticVariable;
 import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.PersistenceUnit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
-import javax.inject.Inject;
+import java.util.ArrayList;
 import java.util.List;
 @Repository
 public class CustomerDAO extends GenericDAO<Customer> implements CustomerDAOI{
@@ -23,12 +21,14 @@ public class CustomerDAO extends GenericDAO<Customer> implements CustomerDAOI{
     public CustomerDAO (@Qualifier("emf") EntityManagerFactory emf){
         super(emf.createEntityManager(),Customer.class);
     }
-    public void createCustomer(CustomerInput cust){
-        Customer cust1 = new Customer();
-        cust1.setTelNo(cust.getTelNo());
-        cust1.setFirstName(cust.getFirstName());
-        cust1.setLastName(cust.getLastName());
-        this.create(cust1);
+    public boolean createCustomer(Customer cust){
+        try{
+            this.create(cust);
+            return true;
+        }
+        catch (Exception e){
+            return false;
+        }
     }
     public boolean updateCustomer(Customer cust){
         try {
@@ -48,5 +48,19 @@ public class CustomerDAO extends GenericDAO<Customer> implements CustomerDAOI{
     public Customer getCustomerbyId(String id) {
         return this.findById(id);
     }
+    public Customer getCustomerbyUserID(String id){
+        List<GenericQuery> queries = new ArrayList<>();
+        GenericQuery query = new GenericQuery();
+        query.setWhereColumn("userId");
+        query.setValue(id);
+        query.setWhereCondition(GenericQuery.Where.equal);
+        queries.add(query);
+        List<Customer> output = this.findListByWhereCondition(queries, StaticVariable.Condition.and);
+        if (output == null || output.isEmpty()){
+            return null;
+        }
+        else {
+            return output.get(0);
+        }    }
 
 }

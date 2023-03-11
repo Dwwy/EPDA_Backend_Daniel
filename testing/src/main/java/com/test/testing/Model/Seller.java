@@ -7,6 +7,7 @@ import jakarta.persistence.Table;
 import lombok.Data;
 import org.hibernate.annotations.UuidGenerator;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -23,4 +24,7 @@ public class Seller {
     private String companyEmail;
     private String companyNumber;
     private String userId;
+    private String imageURL;
+    private LocalDateTime lastUpdated = LocalDateTime.now();
+
 }

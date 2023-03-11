@@ -22,5 +22,5 @@ public class Product {
     private StaticVariable.prodCat productCategory;
     private String name;
     private String description;
-    private String photos;
+    private String imageURL;
 }

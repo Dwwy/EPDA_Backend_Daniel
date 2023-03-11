@@ -2,12 +2,13 @@ package com.test.testing.Controller;
 
 import com.google.zxing.WriterException;
 import com.test.testing.Dao.*;
-import com.test.testing.Model.Customer;
-import com.test.testing.Model.CustomerInput;
-import com.test.testing.Model.User;
+import com.test.testing.Model.*;
+import com.test.testing.Model.Input.CustomerInput;
+import com.test.testing.Model.Input.GeoLocationInput;
 import com.test.testing.Util.Authenticator;
 import com.test.testing.Util.ImgUp_Down;
 import com.test.testing.Util.StaticVariable;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,8 +16,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.security.GeneralSecurityException;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -29,6 +33,8 @@ public class TestController {
     CustomerDAOI customerDAO;
     @Autowired
     UserDAOI userDAO;
+    @Autowired
+    GeoLocationDAOI geoLocationDAOI;
     @GetMapping("/get")
     public void Get(String pass) throws GeneralSecurityException {
         if (pass.equals(Authenticator.getTOTPCode(StaticVariable.authenticator_secret()))) {
@@ -54,9 +60,30 @@ public class TestController {
         cust.setAccountType(StaticVariable.accountType.Customer);
         cust.setPassword("daniel");
         cust.setEmail("danielwong2612@gmail.com");
-        customerDAO.createCustomer(cust);
-        userDAO.createUser(cust);
-
+        List<GeoLocationInput> addresses = new ArrayList<>();
+//        if (userDAO.createUser(cust.toUser())){
+//            String id = userDAO.getUserbyEmail("danielwong2612@gmail.com").getId();
+//            cust.setUserId(id);
+//            customerDAO.createCustomer(cust.toCustomer());
+//            for (int i = 0; i<3; i++){
+//                GeoLocationInput address = new GeoLocationInput();
+//                address.setZipCode("12345");
+//                address.setUnit(Integer.toString(i+1));
+//                address.setUserId(id);
+//                address.setCity("Shah Alam");
+//                address.setState("Selangor");
+//                address.setCountry("Malaysia");
+//                address.setStreet("Jalan Hello");
+//                address.setPrimary(false);
+//                if (i == 0){
+//                    address.setPrimary(true);
+//                }
+//                addresses.add(address);
+//            }
+////            addresses.forEach(x->{
+////                geoLocationDAOI.createGeoLocation(x.toGeoLocation());
+////            });
+//        }
     }
     @PostMapping("/update")
     public void update(String id){
@@ -79,13 +106,34 @@ public class TestController {
         List<User> users = userDAO.getAllUser();
         return users;
     }
-    @PostMapping("test")
-    public String test(@RequestBody MultipartFile file){
+    @PostMapping("imageUpload")
+    public String imageUpload(@RequestBody MultipartFile file){
         try {
             return ImgUp_Down.uploadImage(file).get().getResponseData().getImageUrl();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+    @GetMapping("test")
+    public byte[] test() throws IOException {
+//        try {
+//            return ImgUp_Down.uploadImage(file).get().getResponseData().getImageUrl();
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+//        String id = userDAO.getUserbyEmail("danielwong2612@gmail.com").getId();
+//        return geoLocationDAOI.getAllGeoLocationbyUserId(id);
+        File image  = new File("QRCode.png");
+        InputStream inputStream = new FileInputStream(image);
+        byte[] img = IOUtils.toByteArray(inputStream);
+        FileOutputStream output = new FileOutputStream("QRCODE1.png");
+        output.write(img);
+        output.close();
+        return img;
+    }
+    @GetMapping("test1")
+    public byte[] test1(@RequestBody MultipartFile file) throws IOException{
+        return file.getBytes();
     }
 
 }

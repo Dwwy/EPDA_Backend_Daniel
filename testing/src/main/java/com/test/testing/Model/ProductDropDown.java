@@ -23,4 +23,5 @@ public class ProductDropDown {
     private Double length_cm;
     private Double height_cm;
     private Double width_cm;
+    private Double price;
 }

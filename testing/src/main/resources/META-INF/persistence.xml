@@ -23,7 +23,7 @@
             <property name="jakarta.persistence.jdbc.password" value="Dwwy011226@"/>
             <property name="jakarta.persistence.jdbc.driver" value="org.postgresql.Driver"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
-            <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.globally_quoted_identifiers" value="true"/>
             <property name="hibernate.globally_quoted_identifiers_skip_column_definitions" value="true"/>

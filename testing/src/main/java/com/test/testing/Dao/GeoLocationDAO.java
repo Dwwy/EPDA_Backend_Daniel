@@ -1,14 +1,13 @@
 package com.test.testing.Dao;
 
-import com.test.testing.Model.Customer;
-import com.test.testing.Model.CustomerInput;
-import com.test.testing.Model.GeoLocation;
-import com.test.testing.Model.GeoLocationInput;
+import com.test.testing.Model.*;
+import com.test.testing.Util.StaticVariable;
 import jakarta.persistence.EntityManagerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -19,17 +18,14 @@ public class GeoLocationDAO extends GenericDAO<GeoLocation> implements GeoLocati
     public GeoLocationDAO(@Qualifier("emf") EntityManagerFactory emf){
         super(emf.createEntityManager(),GeoLocation.class);
     }
-    public void createGeoLocation(GeoLocationInput location, String userID){
-        GeoLocation location1 = new GeoLocation();
-        location1.setCity(location.getCity());
-        location1.setUnit(location.getUnit());
-        location1.setCountry(location.getCountry());
-        location1.setState(location.getState());
-        location1.setPrimary(location.isPrimary());
-        location1.setZipCode(location.getZipCode());
-        location1.setUserId(userID);
-        location1.setStreet(location1.getStreet());
-        this.create(location1);
+    public boolean createGeoLocation(GeoLocation location){
+        try{
+            this.create(location);
+            return true;
+        }
+        catch (Exception e){
+            return false;
+        }
     }
     public boolean updateGeoLocation(GeoLocation location){
         try {
@@ -49,5 +45,15 @@ public class GeoLocationDAO extends GenericDAO<GeoLocation> implements GeoLocati
     public GeoLocation getGeoLocationbyId(String id) {
         return this.findById(id);
     }
+    public List<GeoLocation> getAllGeoLocationbyUserId (String userId) {
+        List<GenericQuery> queries = new ArrayList<>();
+        GenericQuery query = new GenericQuery();
+        query.setWhereColumn("userId");
+        query.setValue(userId);
+        query.setWhereCondition(GenericQuery.Where.equal);
+        queries.add(query);
+        return this.findListByWhereCondition(queries, StaticVariable.Condition.and);
+    }
+
 
 }

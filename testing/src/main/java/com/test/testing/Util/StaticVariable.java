@@ -6,7 +6,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class StaticVariable {
-    public static String secret = "BvnozvrCFVJ8lx5wnyRq";
+    public static double freightCost = 5.00;
     public enum Condition{
         and,
         or

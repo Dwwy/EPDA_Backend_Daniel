@@ -18,6 +18,7 @@ public class Payment {
     @GeneratedValue
     @UuidGenerator(style = UuidGenerator.Style.TIME)
     private String id = UUID.randomUUID().toString();
+    private String orderId;
     private StaticVariable.Payment_Type paymentType;
     private StaticVariable.Payment_Status status;
     private Double Price;

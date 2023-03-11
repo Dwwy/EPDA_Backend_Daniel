@@ -132,7 +132,11 @@ public abstract class GenericDAO<T> {
             }
 
         });
-        Predicate predicate = null;
+        if (predicateList.size() == 1){
+            cq.where(predicateList.get(0));
+            return em.createQuery(cq).getResultList();
+        }
+        Predicate predicate;
         if (condition == StaticVariable.Condition.or){
             predicate = cb.or(predicateList.toArray(new Predicate[0]));
         }

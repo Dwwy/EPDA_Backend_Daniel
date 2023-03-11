@@ -22,16 +22,17 @@ public class User {
     @GeneratedValue
     @UuidGenerator(style = UuidGenerator.Style.TIME)
     private String id = UUID.randomUUID().toString();
+    @Column(unique=true)
     private String email;
     private LocalDateTime creationDate = LocalDateTime.now();
     private StaticVariable.accountType accountType;
     private String password;
     public String getPassword(){
-        TextEncryptor encryptor = new TextEncryptor(StaticVariable.secret);
+        TextEncryptor encryptor = new TextEncryptor(StaticVariable.authenticator_secret());
         return encryptor.decrypt(this.password);
     }
     public void setPassword(String text){
-        TextEncryptor encryptor = new TextEncryptor(StaticVariable.secret);
+        TextEncryptor encryptor = new TextEncryptor(StaticVariable.authenticator_secret());
         String pass = encryptor.encrypt(text);
         this.password = pass;
     }
