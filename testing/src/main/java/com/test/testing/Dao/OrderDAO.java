@@ -20,8 +20,14 @@ public class OrderDAO extends GenericDAO<Order> implements OrderDAOI{
     public OrderDAO(@Qualifier("emf") EntityManagerFactory emf){
         super(emf.createEntityManager(),Order.class);
     }
-    public void createOrder(Order order){
-        this.create(order);
+    public boolean createOrder(Order order){
+        try{
+            this.create(order);
+            return true;
+        }
+        catch (Exception e){
+            return false;
+        }
     }
     public boolean updateOrder(Order order){
         try {
@@ -41,12 +47,12 @@ public class OrderDAO extends GenericDAO<Order> implements OrderDAOI{
     public Order getOrderbyId(String id) {
         return this.findById(id);
     }
-    public List<Order> getAllOrderbyId (List<String> id) {
+    public List<Order> getAllOrderbyCustomerId (String customerId) {
         List<GenericQuery> queries = new ArrayList<>();
         GenericQuery query = new GenericQuery();
-        query.setWhereColumn("id");
-        query.setValue(id);
-        query.setWhereCondition(GenericQuery.Where.id);
+        query.setWhereColumn("customerId");
+        query.setValue(customerId);
+        query.setWhereCondition(GenericQuery.Where.equal);
         queries.add(query);
         return this.findListByWhereCondition(queries, StaticVariable.Condition.and);
     }

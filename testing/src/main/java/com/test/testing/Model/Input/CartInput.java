@@ -7,6 +7,7 @@ import lombok.Data;
 
 @Data
 public class CartInput {
+    private String cartId;
     private String userId;
     private String orderId;
     private String productId;
@@ -16,19 +17,19 @@ public class CartInput {
         Cart cart = new Cart();
         cart.setUserId(userId);
         cart.setProductId(productId);
-        cart.setPrice(price);
+        cart.setPrice(price *  Double.valueOf(quantity));
         cart.setQuantity(quantity);
         return cart;
     }
-    public Cart_Order toCart_Order(String cartId){
+    public Cart_Order toCart_Order(){
         if (orderId == null){
             return null;
         }
         else {
             Cart_Order cartOrder = new Cart_Order();
             cartOrder.setOrderId(orderId);
-            cartOrder.setFreightCost(StaticVariable.freightCost);
             cartOrder.setCartId(cartId);
+            cartOrder.setPrice(price * Double.valueOf(quantity));
             return cartOrder;
         }
     }

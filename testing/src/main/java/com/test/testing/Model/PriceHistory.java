@@ -17,7 +17,7 @@ public class PriceHistory {
     @Id
     @GeneratedValue
     @UuidGenerator(style = UuidGenerator.Style.TIME)
-    private String id = UUID.randomUUID().toString();
+    private String id;
     private String productDropDownId;
     private LocalDateTime creationDate = LocalDateTime.now();
     private Double price;

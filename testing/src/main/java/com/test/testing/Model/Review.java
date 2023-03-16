@@ -6,6 +6,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Data;
 import org.hibernate.annotations.UuidGenerator;
+import org.springframework.cglib.core.Local;
 
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -18,10 +19,11 @@ public class Review {
     @Id
     @GeneratedValue
     @UuidGenerator(style = UuidGenerator.Style.TIME)
-    private String id = UUID.randomUUID().toString();
+    private String id;
+    private String productId;
+    private String userId;
     private int score;
     private String title;
     private String description;
-    private LocalDateTime creationTime;
     private LocalDateTime lastUpdated = LocalDateTime.now();
 }

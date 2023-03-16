@@ -64,6 +64,16 @@ public class ProductBL implements ProductBLI{
         ProductOutput output = new ProductOutput(product,drop,getPrice(product));
         return output;
     }
+    public List<ProductOutput> getProductBySellerId (String sellerId){
+        List<ProductOutput> output = new ArrayList<>();
+        List<Product> products = productDAO.searchProductbySellerId(sellerId);
+        products.forEach(x->{
+            List<ProductDropDown> drop = productDropDownBL.getProductDropDownbyProductId(x.getId());
+            ProductOutput productOutput = new ProductOutput(x,drop,getPrice(x));
+            output.add(getFullProduct(x));
+        });
+        return output;
+    }
     public Response searchProduct(String criteria){
         List<ProductOutput> output = new ArrayList<>();
         List<Product> products = productDAO.searchProductbyName(criteria);

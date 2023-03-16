@@ -64,6 +64,15 @@ public class ProductDAO extends GenericDAO<Product> implements ProductDAOI{
         queries.add(query);
         return this.findListByWhereCondition(queries, StaticVariable.Condition.and);
     }
+    public List<Product> searchProductbySellerId (String sellerId){
+        List<GenericQuery> queries = new ArrayList<>();
+        GenericQuery query = new GenericQuery();
+        query.setWhereColumn("SellerId");
+        query.setValue(sellerId);
+        query.setWhereCondition(GenericQuery.Where.equal);
+        queries.add(query);
+        return this.findListByWhereCondition(queries, StaticVariable.Condition.and);
+    }
 
 
 }

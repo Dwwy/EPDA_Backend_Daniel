@@ -3,10 +3,7 @@ package com.test.testing.Dao;
 import com.test.testing.Model.GenericQuery;
 import com.test.testing.Util.StaticVariable;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Predicate;
-import jakarta.persistence.criteria.Root;
+import jakarta.persistence.criteria.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -38,6 +35,22 @@ public abstract class GenericDAO<T> {
         T mergedEntity = em.merge(entity);
         em.getTransaction().commit();
         return mergedEntity;
+    }
+    public boolean bulkUpdate (List<T> entities, String field, Object value){
+        try {
+            em.getTransaction().begin();
+            CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
+            CriteriaUpdate<T> update = criteriaBuilder.createCriteriaUpdate(entityClass);
+            Root<T> root = update.from(entityClass);
+            update.set(root.get(field), value);
+            em.createQuery(update).executeUpdate();
+            em.getTransaction().commit();
+            return true;
+        }
+        catch (Exception e){
+            em.getTransaction().rollback();
+            return false;
+        }
     }
 
     public void delete(T entity) {

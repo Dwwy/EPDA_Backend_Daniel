@@ -5,6 +5,8 @@ import com.test.testing.Model.Seller;
 import com.test.testing.Model.User;
 import lombok.Data;
 
+import java.time.format.DateTimeFormatter;
+
 @Data
 public class SellerProfile {
     private String id;
@@ -22,7 +24,10 @@ public class SellerProfile {
     private String city;
     private String state;
     private String country;
+    private Double walletBalance;
+    private String lastUpdated;
     public SellerProfile (Seller seller, User user, GeoLocation geoLocation){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss a");
         this.id  = seller.getId();
         this.email = user.getEmail();
         this.companyName = seller.getCompanyName();
@@ -38,5 +43,6 @@ public class SellerProfile {
         this.city = geoLocation.getCity();
         this.state = geoLocation.getState();
         this.country = geoLocation.getCountry();
+        this.walletBalance = seller.getWalletBalance();
     }
 }

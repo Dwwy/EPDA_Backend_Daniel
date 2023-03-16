@@ -6,6 +6,9 @@ import com.test.testing.Util.StaticVariable;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.time.LocalDateTime;
+
 @Data
 public class CustomerUpdate {
     private String customerId;
@@ -21,6 +24,7 @@ public class CustomerUpdate {
         customer.setLastName(lastName);
         customer.setTelNo(telNo);
         customer.setImageURL(imageUrl);
+        customer.setLastUpdated(LocalDateTime.now());
         return customer;
     }
     public UserUpdate toUserUpdate(String userId){

@@ -17,7 +17,7 @@ public class CustomerInput {
     @NotBlank
     private String telNo;
     @NotBlank
-    private StaticVariable.accountType accountType;
+    private StaticVariable.accountType accountType = StaticVariable.accountType.Customer;
     private String userId;
     @NotBlank
     private String email;

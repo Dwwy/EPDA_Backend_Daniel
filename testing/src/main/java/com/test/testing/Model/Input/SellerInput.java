@@ -28,7 +28,7 @@ public class SellerInput {
     private String state;
     private String country;
     private String imageUrl;
-    private StaticVariable.accountType accountType;
+    private StaticVariable.accountType accountType = StaticVariable.accountType.Seller;
     public void setImageUrl(String url){
         this.imageUrl = url;
     }
@@ -41,6 +41,7 @@ public class SellerInput {
         seller.setCompanyNumber(companyNumber);
         seller.setImageURL(imageUrl);
         seller.setUserId(userId);
+        seller.setWalletBalance(0.0);
         return seller;
     }
     public User toUser(){

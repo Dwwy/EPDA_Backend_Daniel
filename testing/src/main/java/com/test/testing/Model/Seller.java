@@ -17,7 +17,7 @@ public class Seller {
     @Id
     @GeneratedValue
     @UuidGenerator(style = UuidGenerator.Style.TIME)
-    private String id = UUID.randomUUID().toString();
+    private String id;
     private String companyName;
     private String contactFName;
     private String contactLName;
@@ -25,6 +25,10 @@ public class Seller {
     private String companyNumber;
     private String userId;
     private String imageURL;
-    private LocalDateTime lastUpdated = LocalDateTime.now();
+    private Double walletBalance;
+    private LocalDateTime lastUpdated ;
+    public Seller (){
+        lastUpdated = LocalDateTime.now();
+    }
 
 }

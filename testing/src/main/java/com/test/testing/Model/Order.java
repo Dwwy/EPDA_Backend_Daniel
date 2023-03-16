@@ -19,10 +19,8 @@ public class Order {
     @Id
     @GeneratedValue
     @UuidGenerator(style = UuidGenerator.Style.TIME)
-    private String id = UUID.randomUUID().toString();
-    private StaticVariable.orderStat status = StaticVariable.orderStat.Pending;
-    private LocalDateTime lastUpdated = LocalDateTime.now();
-    private LocalDateTime acceptedDate;
-    private LocalDateTime estimatedDeliveryDate;
-    private LocalDateTime deliveredDate;
+    private String id;
+    private String customerId;
+    private LocalDateTime creationDate = LocalDateTime.now();
+    private Double freightCost;
 }

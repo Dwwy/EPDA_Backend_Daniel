@@ -17,7 +17,7 @@ public class Product {
     @Id
     @GeneratedValue
     @UuidGenerator(style = UuidGenerator.Style.TIME)
-    private String id = UUID.randomUUID().toString();
+    private String id;
     private String SellerId;
     private StaticVariable.prodCat productCategory;
     private String name;

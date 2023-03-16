@@ -21,7 +21,7 @@ public class User {
     @Id
     @GeneratedValue
     @UuidGenerator(style = UuidGenerator.Style.TIME)
-    private String id = UUID.randomUUID().toString();
+    private String id;
     @Column(unique=true)
     private String email;
     private LocalDateTime creationDate = LocalDateTime.now();

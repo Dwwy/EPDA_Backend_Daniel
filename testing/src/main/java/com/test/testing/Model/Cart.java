@@ -16,10 +16,9 @@ public class Cart {
     @Id
     @GeneratedValue
     @UuidGenerator(style = UuidGenerator.Style.TIME)
-    private String id = UUID.randomUUID().toString();
+    private String id;
     private String productId;
     private String userId;
     private int quantity;
     private Double price;
-
 }

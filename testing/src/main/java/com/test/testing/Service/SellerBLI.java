@@ -11,4 +11,5 @@ public interface SellerBLI {
     SellerProfile getSellerProfilebySellerId(String sellerId);
     SellerProfile getSellerProfilebyUserId(String id);
     Response update(SellerUpdate input);
+    Response collectPaymentFromWallet (String sellerId, Double amount);
 }

@@ -16,7 +16,7 @@ public class GeoLocation {
     @Id
     @GeneratedValue
     @UuidGenerator(style = UuidGenerator.Style.TIME)
-    private String id = UUID.randomUUID().toString();
+    private String id;
     private boolean primary;
     private String userId;
     private String zipCode;

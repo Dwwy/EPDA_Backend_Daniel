@@ -11,4 +11,5 @@ public interface ProductDAOI {
     List<Product> getAllProduct();
     Product getProductbyId(String id);
     List<Product> searchProductbyName(String name);
+    List<Product> searchProductbySellerId (String sellerId);
 }

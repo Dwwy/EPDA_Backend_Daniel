@@ -1,10 +1,9 @@
 package com.test.testing.Service;
 
-import com.test.testing.Dao.GeoLocationDAOI;
-import com.test.testing.Dao.SellerDAOI;
-import com.test.testing.Dao.UserDAOI;
+import com.test.testing.Dao.*;
 import com.test.testing.Model.GeoLocation;
 import com.test.testing.Model.Input.SellerInput;
+import com.test.testing.Model.Input.WalletHistoryInput;
 import com.test.testing.Model.Output.SellerProfile;
 import com.test.testing.Model.Seller;
 import com.test.testing.Model.UpdateInput.SellerUpdate;
@@ -28,6 +27,8 @@ public class SellerBL implements SellerBLI {
     SellerDAOI sellerDAO;
     @Autowired
     UserBLI userBL;
+    @Autowired
+    WalletHistoryDAOI walletHistoryDAO;
     public Response register(SellerInput input){
         if (userDAO.createUser(input.toUser())){
             User user = userDAO.getUserbyEmail(input.getEmail());
@@ -94,5 +95,26 @@ public class SellerBL implements SellerBLI {
         List<GeoLocation> geoLocation = geoLocationDAO.getAllGeoLocationbyUserId(user.getId());
         return new SellerProfile(seller,user,geoLocation.get(0));
     }
-
+    public Response collectPaymentFromWallet (String sellerId, Double amount) {
+        WalletHistoryInput walletHistoryInput = new WalletHistoryInput(amount, sellerId);
+        if (walletHistoryDAO.createWalletHistory(walletHistoryInput.toWalletHistory())){
+            Seller seller = sellerDAO.getSellerbyId(sellerId);
+            if (amount > 0) {
+                seller.setWalletBalance(seller.getWalletBalance()+ amount);
+            }
+            else {
+                if (amount > seller.getWalletBalance()){
+                    return new Response(false, "Seller is trying to retrieve more than what he has");
+                }
+                else {
+                    seller.setWalletBalance(seller.getWalletBalance() - amount);
+                }
+            }
+            sellerDAO.updateSeller(seller);
+            return new Response(true);
+        }
+        else {
+            return new Response(false, "Error occurred while creating wallet history");
+        }
+    }
 }

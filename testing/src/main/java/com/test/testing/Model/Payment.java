@@ -8,6 +8,7 @@ import jakarta.persistence.Table;
 import lombok.Data;
 import org.hibernate.annotations.UuidGenerator;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -17,9 +18,13 @@ public class Payment {
     @Id
     @GeneratedValue
     @UuidGenerator(style = UuidGenerator.Style.TIME)
-    private String id = UUID.randomUUID().toString();
+    private String id;
     private String orderId;
     private StaticVariable.Payment_Type paymentType;
     private StaticVariable.Payment_Status status;
     private Double Price;
+    private LocalDateTime lastUpdated ;
+    public Payment (){
+        lastUpdated = LocalDateTime.now();
+    }
 }

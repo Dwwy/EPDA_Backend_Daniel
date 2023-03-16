@@ -7,6 +7,8 @@ import com.test.testing.Util.StaticVariable;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDateTime;
+
 @Data
 public class SellerUpdate {
     private String sellerId;
@@ -31,6 +33,7 @@ public class SellerUpdate {
         seller.setCompanyEmail(companyEmail);
         seller.setCompanyNumber(companyNumber);
         seller.setImageURL(imageUrl);
+        seller.setLastUpdated(LocalDateTime.now());
         return seller;
     }
     public UserUpdate toUserUpdate(String userId){

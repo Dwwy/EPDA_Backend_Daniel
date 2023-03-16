@@ -40,7 +40,8 @@ public class StaticVariable {
     }
     public enum accountType{
         Customer,
-        Seller
+        Seller,
+        Staff
     }
     public enum prodCat{
         ClothingApparel,
@@ -55,12 +56,13 @@ public class StaticVariable {
         Pending,
         //Completed checkout process, not paid
         Awaiting_Payment,
+        //Waiting for seller's acceptance
+        Awaiting_Acceptance,
         //Paid, waiting to deliver
         Awaiting_Shipment,
+        Delivered,
         //Seller Cancel order
-        Cancelled,
-        Awaiting_Refund,
-        Refunded
+        Cancelled
     }
     public enum Payment_Type{
         credit_card,
